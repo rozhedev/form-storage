@@ -1,0 +1,330 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+  outline: none;
+  border: none;
+}
+
+body {
+  background-color: #111;
+  color: #111;
+}
+
+.container {
+  max-width: 1312px;
+  margin: 64px auto 0;
+}
+
+.title {
+  color: #f9f9f9;
+  text-align: center;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.copy-inp {
+  background-color: #f9f9f9;
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.btn {
+  display: block;
+  cursor: pointer;
+  background-color: #655faf;
+  border: 2px solid #655faf;
+  border-radius: 8px;
+  color: #f9f9f9;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  font-weight: bold;
+  padding: 10px;
+  margin: 20px auto 0;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  -webkit-transition: 0.6s all;
+  transition: 0.6s all;
+}
+
+.btn:hover {
+  background-color: #f9f9f9;
+  color: #655faf;
+}
+
+.deposit__inner {
+  margin: 40px auto 0;
+  width: 44%;
+  min-width: 544px;
+  min-height: 400px;
+  background-color: #f9f9f9;
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.deposit__currencies {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: (1fr)[2];
+  -ms-grid-columns: (1fr)[3];
+      grid-template: repeat(2, 1fr)/repeat(3, 1fr);
+  gap: 16px;
+}
+
+.deposit__currencies-btn {
+  border: 2px solid #655faf;
+  background-color: #f9f9f9;
+  color: #655faf;
+  padding: 8px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  -webkit-transition: 0.6s all;
+  transition: 0.6s all;
+}
+
+.deposit__currencies-btn:hover {
+  -webkit-box-shadow: 0 0 12px 2px #655faf;
+          box-shadow: 0 0 12px 2px #655faf;
+}
+
+.deposit__currencies-btn._active {
+  background-color: #655faf;
+  color: #f9f9f9;
+  cursor: default;
+}
+
+.deposit__amount, .deposit__period {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.deposit__amount-label, .deposit__period-label {
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+.deposit__amount-inp, .deposit__period-inp {
+  border-radius: 8px;
+  border: 2px solid #655faf;
+  padding: 8px 12px;
+  font-size: 18px;
+  margin-top: 12px;
+  -webkit-transition: 0.6s all;
+  transition: 0.6s all;
+}
+
+.deposit__amount-inp:focus, .deposit__period-inp:focus {
+  outline: none;
+  border: 2px solid #655faf;
+  -webkit-box-shadow: 0 0 12px 2px #655faf;
+          box-shadow: 0 0 12px 2px #655faf;
+}
+
+.deposit__amount-inp._success, .deposit__period-inp._success {
+  border-color: #0e833b;
+}
+
+.deposit__amount-inp._error, .deposit__period-inp._error {
+  border-color: #912a10;
+}
+
+.deposit__amount-error, .deposit__period-error {
+  display: block;
+  padding-top: 4px;
+  color: #912a10;
+  letter-spacing: 0.04em;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.deposit__amount-error._active, .deposit__period-error._active {
+  overflow: visible;
+  opacity: 1;
+}
+
+.deposit__amount {
+  margin-top: 32px;
+}
+
+.deposit__period {
+  margin-top: 16px;
+}
+
+.deposit__period-inp._success {
+  border-color: #0e833b;
+}
+
+.deposit__period-inp._error {
+  border-color: #912a10;
+}
+
+.deposit__btn {
+  width: 160px;
+}
+
+.info {
+  margin: 64px auto 40px;
+  width: 44%;
+  min-width: 544px;
+  background-color: #f9f9f9;
+  padding: 16px 48px;
+  border-radius: 16px;
+}
+
+.subtitle {
+  font-size: 24px;
+  margin: 16px 0 8px;
+  text-align: center;
+}
+
+.payment__inner {
+  margin: 40px auto;
+}
+
+.payment__timer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #655faf;
+  font-size: 20px;
+}
+
+.payment__timer span {
+  font-weight: 700;
+}
+
+.payment__content-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 24px;
+}
+
+.payment__content-label {
+  font-weight: 500;
+  font-size: 20px;
+  font-weight: 0.04em;
+  position: relative;
+}
+
+.payment__content-result {
+  font-weight: 700;
+  font-size: 20px;
+  font-weight: 0.04em;
+  margin-left: 8px;
+}
+
+.payment__process-label, .payment__process-amount, .payment__process-currency {
+  font-weight: 700;
+  line-height: 2;
+}
+
+.payment__process-amount {
+  text-decoration: underline;
+  margin-left: 6px;
+  width: 112px;
+}
+
+.payment__process-currency {
+  color: #655faf;
+}
+
+.payment__process-wallet {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.payment__process-output {
+  width: 79%;
+}
+
+.payment__copy-btn {
+  width: 80px;
+  color: #fff;
+  background: #655faf;
+  text-align: center;
+  border-radius: 8px;
+  padding: 4px 8px;
+  -webkit-transition: opacity 0.7s;
+  transition: opacity 0.7s;
+  cursor: pointer;
+  margin: 0 8px 0 4px;
+}
+
+.payment__qr-label {
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 272px;
+}
+
+.payment__qr-text {
+  margin-right: 8px;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+}
+
+.payment__btn {
+  width: 280px;
+}
+
+.success__inner {
+  min-height: 200px;
+}
+
+.success__content {
+  text-align: center;
+}
+
+.success__content i {
+  color: #655faf;
+  font-size: 72px;
+}
+
+.success__content-title {
+  font-size: 32px;
+  margin: 20px 0;
+}
+
+.success__content-text {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}

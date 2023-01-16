@@ -1,0 +1,300 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
+
+$accent: #655faf;
+$errorRed: #912a10;
+$successGreen: #0e833b;
+$dark: #111;
+$light: #f9f9f9;
+$transition: 0.6s all;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+    outline: none;
+    border: none;
+}
+
+body {
+    background-color: $dark;
+    color: $dark;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.container {
+    max-width: 1312px;
+    margin: 64px auto 0;
+}
+
+.title {
+    color: $light;
+    text-align: center;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.copy-inp {
+    background-color: $light;
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+.btn {
+    display: block;
+    cursor: pointer;
+    background-color: $accent;
+    border: 2px solid $accent;
+    border-radius: 8px;
+    color: $light;
+    font-size: 16px;
+    letter-spacing: 0.06em;
+    font-weight: bold;
+    padding: 10px;
+    margin: 20px auto 0;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    transition: $transition;
+
+    &:hover {
+        background-color: $light;
+        color: $accent;
+    }
+}
+
+.deposit {
+    &__inner {
+        margin: 40px auto 0;
+        width: 44%;
+        min-width: 544px;
+        min-height: 400px;
+        background-color: $light;
+        border-radius: 16px;
+        padding: 32px;
+    }
+
+    &__currencies {
+        display: grid;
+        grid-template: repeat(2, 1fr) / repeat(3, 1fr);
+        gap: 16px;
+
+        &-btn {
+            border: 2px solid $accent;
+            background-color: $light;
+            color: $accent;
+            padding: 8px 6px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            letter-spacing: 0.04em;
+            font-weight: 600;
+            transition: 0.6s all;
+
+            &:hover {
+                box-shadow: 0 0 12px 2px $accent;
+            }
+            &._active {
+                background-color: $accent;
+                color: $light;
+                cursor: default;
+            }
+        }
+    }
+    &__amount,
+    &__period {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &-label {
+            font-size: 18px;
+            letter-spacing: 0.04em;
+            font-weight: 500;
+        }
+        &-inp {
+            border-radius: 8px;
+            border: 2px solid $accent;
+            padding: 8px 12px;
+            font-size: 18px;
+            margin-top: 12px;
+            transition: 0.6s all;
+
+            &:focus {
+                outline: none;
+                border: 2px solid $accent;
+                box-shadow: 0 0 12px 2px $accent;
+            }
+            &._success {
+                border-color: $successGreen;
+            }
+            &._error {
+                border-color: $errorRed;
+            }
+        }
+        &-error {
+            display: block;
+            padding-top: 4px;
+            color: $errorRed;
+            letter-spacing: 0.04em;
+            overflow: hidden;
+            opacity: 0;
+
+            &._active {
+                overflow: visible;
+                opacity: 1;
+            }
+        }
+    }
+    &__amount {
+        margin-top: 32px;
+    }
+    &__period {
+        margin-top: 16px;
+    }
+    &__period {
+        &-inp {
+            &._success {
+                border-color: $successGreen;
+            }
+            &._error {
+                border-color: $errorRed;
+            }
+        }
+    }
+    &__btn {
+        width: 160px;
+    }
+}
+
+// ! PAYMENT PAGE
+
+.subtitle {
+    font-size: 24px;
+    margin: 16px 0 8px;
+    text-align: center;
+}
+
+.payment {
+    &__inner {
+        margin: 40px auto;
+    }
+    &__timer {
+        display: flex;
+        justify-content: center;
+        color: $accent;
+        font-size: 20px;
+
+        span {
+            font-weight: 700;
+        }
+    }
+    &__content {
+        &-item {
+            display: flex;
+            margin-top: 24px;
+        }
+
+        &-label {
+            font-weight: 500;
+            font-size: 20px;
+            font-weight: 0.04em;
+            position: relative;
+        }
+        &-result {
+            font-weight: 700;
+            font-size: 20px;
+            font-weight: 0.04em;
+            margin-left: 8px;
+        }
+    }
+
+    &__process {
+        &-label,
+        &-amount,
+        &-currency {
+            font-weight: 700;
+            line-height: 2;
+        }
+        &-amount {
+            text-decoration: underline;
+            margin-left: 6px;
+            width: 112px;
+        }
+        &-currency {
+            color: $accent;
+        }
+        &-wallet {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        &-output {
+            width: 79%;
+        }
+    }
+    &__copy {
+        &-btn {
+            width: 80px;
+            color: #fff;
+            background: $accent;
+            text-align: center;
+            border-radius: 8px;
+            padding: 4px 8px;
+            transition: opacity 0.7s;
+            cursor: pointer;
+            margin: 0 8px 0 4px;
+        }
+    }
+    &__qr {
+        &-label {
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 272px;
+        }
+        &-text {
+            margin-right: 8px;
+            font-size: 16px;
+            letter-spacing: 0.02em;
+        }
+    }
+    &__btn {
+        width: 280px;
+    }
+}
+
+// * SUCCESS
+
+.success {
+    &__inner {
+        min-height: 200px;
+    }
+    &__content {
+        text-align: center;
+        i {
+            color: $accent;
+            font-size: 72px;
+        }
+        &-title {
+            font-size: 32px;
+            margin: 20px 0;
+        }
+        &-text {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.4;
+            letter-spacing: 0.02em;
+        }
+    }
+}
+

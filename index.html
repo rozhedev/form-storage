@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment redirect</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <section class="deposit">
+        <div class="container">
+            <h2 class="title">Make a deposit</h2>
+
+            <div class="deposit__inner">
+                <div class="deposit__currencies">
+                    <button class="deposit__currencies-btn" data-currency="Bitcoin">Bitcoin
+                        BTC</button>
+                    <button class="deposit__currencies-btn" data-currency="Ethereum">Ethereum
+                        ETH</button>
+                    <button class="deposit__currencies-btn" data-currency="Litecoin">Litecoin
+                        LTC</button>
+                    <button class="deposit__currencies-btn" data-currency="Dash">Dash DASH</button>
+                    <button class="deposit__currencies-btn" data-currency="Monero">Monero XMR</button>
+                    <button class="deposit__currencies-btn" data-currency="USD">Dollar USD</button>
+                </div>
+
+                <div class="deposit__amount">
+                    <label for="amount-inp" class="deposit__amount-label">Invest amount</label>
+                    <input type="number" name="amount" id="amount-inp" class="deposit__amount-inp"
+                        placeholder="Invest amount" maxlength="11">
+                    <small class="deposit__amount-error">Error message</small>
+                </div>
+
+                <div class="deposit__period">
+                    <label for="period-inp" class="deposit__period-label">Invest period</label>
+                    <input type="number" name="period" id="period-inp" class="deposit__period-inp"
+                        placeholder="Invest period">
+                    <small class="deposit__period-error">Error message</small>
+                </div>
+
+                <!-- Redirect to payment.html -->
+                <a href="" class="deposit__btn btn">Invest funds</a>
+            </div>
+
+            <div class="info">
+                <ul>
+                    <li>Small invest: 20$ - 100$</li>
+                    <li>Medium invest: 200$ - 1000$</li>
+                    <li>Big invest: 1000$ - ...</li>
+                </ul>
+                <ul>
+                    <li>Tariff STARTER: 105% per 1 month (30 days)</li>
+                    <li>Tariff OPTIMAL: 110% per 1 month (30 days)</li>
+                    <li>Tariff PROFFESIONAL: 115% per 1 month (30 days)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://kit.fontawesome.com/f77f4500aa.js" crossorigin="anonymous"></script>
+    <script src="js/randexp.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment redirect</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <section class="deposit payment">
+        <div class="container">
+            <h2 class="title">Payment details</h2>
+
+            <div class="deposit__inner payment__inner">
+                <div class="deposit__content payment__content">
+
+                    <div class="payment__timer">
+                        <div class="payment__timer-label">Time left:
+                            <span id="time-output"></span>
+                        </div>
+                    </div>
+
+                    <h3 class="subtitle">Transaction details</h3>
+
+                    <div class="payment__content-info">
+                        <div class="payment__content-item">
+                            <div class="payment__content-label">Payment method:</div>
+                            <div class="payment__content-result" id="pay-currency-output"> - </div>
+                        </div>
+                        <div class="payment__content-item">
+                            <div class="payment__content-label">Investment amount:</div>
+                            <div class="payment__content-result" id="pay-amount-output">0</div>
+                        </div>
+                        <div class="payment__content-item">
+                            <div class="payment__content-label">Investment period:</div>
+                            <div class="payment__content-result" id="pay-period-output">0</div>
+                        </div>
+                        <div class="payment__content-item">
+                            <div class="payment__content-label">Invoice id:</div>
+                            <div class="payment__content-result" id="pay-id-output"> - </div>
+                        </div>
+                    </div>
+
+                    <h3 class="subtitle">Payment process</h3>
+
+                    <div class="payment__process">
+                        <div class="payment__process-label payment__content-label">Transfer
+
+                            <input class="payment__process-amount copy-inp" name="pay-amount-output2"
+                                id="pay-amount-output2" value="" readonly>
+                            <button class="payment__copy-btn" id="copy-amount">
+                                <span class="payment__copy-tooltip" id="amount-tooltip">Copy</span>
+                                <i class="far fa-copy"></i>
+                            </button>
+
+                            <span class="payment__process-currency" id="pay-currency-output2"></span> to <br>
+                            <span class="payment__process-wallet">
+                                <input class="payment__process-output copy-inp" name="pay-wallet-output"
+                                    id="pay-wallet-output" value="" readonly>
+
+                                <button class="payment__copy-btn" id="copy-address">
+                                    <span class="payment__copy-tooltip" id="address-tooltip">Copy</span>
+                                    <i class="far fa-copy"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <h3 class="subtitle">Additional method</h3>
+
+                    <div class="payment__qr">
+                        <div class="payment__qr-label">
+                            <span class="payment__qr-text">You can make a transaction by scanning this QR code. Or
+                                transfer it manually.</span>
+                            <img class="payment__qr-img" id="qr-code" src="img/usd.png" alt="qr-code">
+                        </div>
+                        <form action="success.html">
+                            <button class="payment__btn btn">Payed</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://kit.fontawesome.com/f77f4500aa.js" crossorigin="anonymous"></script>
+    <script src="js/randexp.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
