@@ -136,7 +136,7 @@ const DEPOSIT_NODES = {
     periodInp: document.querySelector('.deposit__period-inp'),
     investErrOutput: document.querySelector('.deposit__amount-error'),
     periodErrOutput: document.querySelector('.deposit__period-error'),
-    formBtn: document.querySelector('.deposit__btn'),  
+    formBtn: document.getElementById('deposit-btn'),
 }
 
 // * Payments nodes
@@ -157,18 +157,20 @@ const PAY_NODES = {
 }
 
 // * TRANSACTION INFO
-
 let transactionData = {
-    currency: '',
-    amount: '',
-    period: '',
-    wallet: '',
-    imgPath: '',
+    currency: "",
+    amount: "",
+    period: "",
+    wallet: "",
+    imgPath: "",
 };
+
+let validInterval = 2000;
+let time = 1800;            // in seconds
+let storageName = 'dataRaw';
 
 
 // * SELECT CURRENCY
-
 function selectCurrency(e, btnClass, currencyBtns) {
     e.preventDefault();
     let activeBtn = e.target;
@@ -181,17 +183,19 @@ function selectCurrency(e, btnClass, currencyBtns) {
     }
 }
 
+// * Reduse num after comma
+function setDecimalNumber(inp, num) {
+    // цифра устанавливает количество цифр после запятой, т.е. если 3, то максимум 2 цифры после запятой
+    if (inp.value.indexOf(".") != '-1') {
+        inp.value = inp.value.substring(0, inp.value.indexOf(".") + num);
+    }
+}
 
-// * CHECK CUR_LIMITS
-
+// * CHECK CUR LIMITS
 function checkLimits(
-    inp, minAmount, amount2, amount3, maxAmount, errOutput, minAmountError, maxAmountError, blankErr
+    inp, minAmount, maxAmount, errOutput, minAmountError, maxAmountError, blankErr
 ) {
     let value = +inp.value;
-
-    // if (value >= minAmount && value <= maxAmount) {
-
-    // }
 
     if (value == '') {
         inp.classList.remove(STATE_LIST.success);
@@ -205,21 +209,10 @@ function checkLimits(
         errOutput.classList.add(STATE_LIST.active);
         errOutput.textContent = minAmountError;
 
-    } else if (value >= minAmount && value < amount2) {
+    } else if (value >= minAmount && value <= maxAmount) {
         inp.classList.remove(STATE_LIST.error);
         inp.classList.add(STATE_LIST.success);
         errOutput.classList.remove(STATE_LIST.active);
-
-    } else if (value >= amount2 && value <= amount3) {
-        inp.classList.remove(STATE_LIST.error);
-        inp.classList.add(STATE_LIST.success);
-        errOutput.classList.remove(STATE_LIST.active);
-
-    } else if (value > amount3 && value <= maxAmount) {
-        inp.classList.remove(STATE_LIST.error);
-        inp.classList.add(STATE_LIST.success);
-        errOutput.classList.remove(STATE_LIST.active);
-
     } else {
         inp.classList.remove(STATE_LIST.success);
         inp.classList.add(STATE_LIST.error);
@@ -230,9 +223,7 @@ function checkLimits(
     return value;
 }
 
-
 // * CHECK PERIOD
-
 function checkPeriod(
     inp, errOutput, minPeriod, maxPeriod, blankErr
 ) {
@@ -265,9 +256,7 @@ function checkPeriod(
     return value;
 }
 
-
 // * TRANSFER DATA
-
 function transferData(curBtn, obj, newObj, curName, investvalue, periodValue, walletValue, imgPathValue) {
     if (curBtn.getAttribute('data-currency') == curName && curBtn.classList.contains(STATE_LIST.active)) {
         obj.currency = curName;
@@ -278,6 +267,11 @@ function transferData(curBtn, obj, newObj, curName, investvalue, periodValue, wa
 
         localStorage.setItem(newObj, JSON.stringify(obj));
     }
+}
+
+// * Return condition using in call
+function getCurBtnCond(btn, curName, state) {
+    return btn.getAttribute('data-currency') == curName && btn.classList.contains(state);
 }
 
 
@@ -291,107 +285,186 @@ DEPOSIT_NODES.curBtns.forEach((invBtn) => {
     });
 });
 
-
 if (DEPOSIT_NODES.investInp) {
-    DEPOSIT_NODES.investInp.addEventListener('input', () => {
+    DEPOSIT_NODES.investInp.addEventListener('input', function () {
         for (btn of DEPOSIT_NODES.curBtns) {
+            setDecimalNumber(this, 8);
 
-            if (btn.getAttribute('data-currency') == CUR_LIST.bitcoin.name && btn.classList.contains(STATE_LIST.active)) {
-                investValue = setInterval(function () {
+            if (
+                getCurBtnCond(btn, CUR_LIST.bitcoin.name, STATE_LIST.active)
+            ) {
+                investValue = setInterval(() => {
                     checkLimits(
-                        DEPOSIT_NODES.investInp, CUR_LIMITS.bitcoin.min, CUR_LIMITS.bitcoin.amount2, CUR_LIMITS.bitcoin.amount3, CUR_LIMITS.bitcoin.max,
-                        DEPOSIT_NODES.investErrOutput, TEXT_ERRORS.bitcoin.minAmount, TEXT_ERRORS.bitcoin.maxAmount, TEXT_ERRORS.blankInp
+                        this,
+                        CUR_LIMITS.bitcoin.min,
+                        CUR_LIMITS.bitcoin.max,
+                        DEPOSIT_NODES.investErrOutput,
+                        TEXT_ERRORS.bitcoin.minAmount,
+                        TEXT_ERRORS.bitcoin.maxAmount,
+                        TEXT_ERRORS.blankInp
                     );
-                }, 3000);
-
-            } else if (btn.getAttribute('data-currency') == CUR_LIST.ethereum.name && btn.classList.contains(STATE_LIST.active)) {
-                investValue = setInterval(function () {
+                }, validInterval);
+            } else if (
+                getCurBtnCond(btn, CUR_LIST.bitcoin.name, STATE_LIST.active)
+            ) {
+                investValue = setInterval(() => {
                     checkLimits(
-                        DEPOSIT_NODES.investInp, CUR_LIMITS.ethereum.min, CUR_LIMITS.ethereum.amount2, CUR_LIMITS.ethereum.amount3, CUR_LIMITS.ethereum.max,
-                        DEPOSIT_NODES.investErrOutput, TEXT_ERRORS.ethereum.minAmount, TEXT_ERRORS.ethereum.maxAmount, TEXT_ERRORS.blankInp
+                        this,
+                        CUR_LIMITS.ethereum.min,
+                        CUR_LIMITS.ethereum.max,
+                        DEPOSIT_NODES.investErrOutput,
+                        TEXT_ERRORS.ethereum.minAmount,
+                        TEXT_ERRORS.ethereum.maxAmount,
+                        TEXT_ERRORS.blankInp
                     );
-                }, 3000);
-            } else if (btn.getAttribute('data-currency') == CUR_LIST.litecoin.name && btn.classList.contains(STATE_LIST.active)) {
-                investValue = setInterval(function () {
+                }, validInterval);
+            } else if (
+                getCurBtnCond(btn, CUR_LIST.ethereum.name, STATE_LIST.active)
+            ) {
+                investValue = setInterval(() => {
                     checkLimits(
-                        DEPOSIT_NODES.investInp, CUR_LIMITS.litecoin.min, CUR_LIMITS.litecoin.amount2, CUR_LIMITS.litecoin.amount3, CUR_LIMITS.litecoin.max, DEPOSIT_NODES.investErrOutput, TEXT_ERRORS.litecoin.minAmount, TEXT_ERRORS.litecoin.maxAmount, TEXT_ERRORS.blankInp
+                        this,
+                        CUR_LIMITS.litecoin.min,
+                        CUR_LIMITS.litecoin.max,
+                        DEPOSIT_NODES.investErrOutput,
+                        TEXT_ERRORS.litecoin.minAmount,
+                        TEXT_ERRORS.litecoin.maxAmount,
+                        TEXT_ERRORS.blankInp
                     );
-                }, 3000);
-
-            } else if (btn.getAttribute('data-currency') == CUR_LIST.dash.name && btn.classList.contains(STATE_LIST.active)) {
-                investValue = setInterval(function () {
+                }, validInterval);
+            } else if (
+                getCurBtnCond(btn, CUR_LIST.dash.name, STATE_LIST.active)
+            ) {
+                investValue = setInterval(() => {
                     checkLimits(
-                        DEPOSIT_NODES.investInp, CUR_LIMITS.dash.min, CUR_LIMITS.dash.amount2, CUR_LIMITS.dash.amount3, CUR_LIMITS.dash.max, DEPOSIT_NODES.investErrOutput, TEXT_ERRORS.dash.minAmount, TEXT_ERRORS.dash.maxAmount, TEXT_ERRORS.blankInp
+                        this,
+                        CUR_LIMITS.dash.min,
+                        CUR_LIMITS.dash.max,
+                        DEPOSIT_NODES.investErrOutput,
+                        TEXT_ERRORS.dash.minAmount,
+                        TEXT_ERRORS.dash.maxAmount,
+                        TEXT_ERRORS.blankInp
                     );
-                }, 3000);
-
-            } else if (btn.getAttribute('data-currency') == CUR_LIST.monero.name && btn.classList.contains(STATE_LIST.active)) {
-                investValue = setInterval(function () {
+                }, validInterval);
+            } else if (
+                getCurBtnCond(btn, CUR_LIST.monero.name, STATE_LIST.active)
+            ) {
+                investValue = setInterval(() => {
                     checkLimits(
-                        DEPOSIT_NODES.investInp, CUR_LIMITS.monero.min, CUR_LIMITS.monero.amount2, CUR_LIMITS.monero.amount3, CUR_LIMITS.monero.max, DEPOSIT_NODES.investErrOutput,
-                        TEXT_ERRORS.monero.minAmount, TEXT_ERRORS.monero.maxAmount, TEXT_ERRORS.blankInp
+                        this,
+                        CUR_LIMITS.monero.min,
+                        CUR_LIMITS.monero.max,
+                        DEPOSIT_NODES.investErrOutput,
+                        TEXT_ERRORS.monero.minAmount,
+                        TEXT_ERRORS.monero.maxAmount,
+                        TEXT_ERRORS.blankInp
                     );
-                }, 3000);
-
-            } else if (btn.getAttribute('data-currency') == CUR_LIST.usd.name && btn.classList.contains(STATE_LIST.active)) {
-                investValue = setInterval(function () {
+                }, validInterval);
+            } else if (
+                getCurBtnCond(btn, CUR_LIST.usd.name, STATE_LIST.active)
+            ) {
+                investValue = setInterval(() => {
                     checkLimits(
-                        DEPOSIT_NODES.investInp, CUR_LIMITS.usd.min, CUR_LIMITS.usd.amount2, CUR_LIMITS.usd.amount3, CUR_LIMITS.usd.max, DEPOSIT_NODES.investErrOutput, TEXT_ERRORS.usd.minAmount, TEXT_ERRORS.usd.maxAmount, TEXT_ERRORS.blankInp
+                        this,
+                        CUR_LIMITS.usd.min,
+                        CUR_LIMITS.usd.max,
+                        DEPOSIT_NODES.investErrOutput,
+                        TEXT_ERRORS.usd.minAmount,
+                        TEXT_ERRORS.usd.maxAmount,
+                        TEXT_ERRORS.blankInp
                     );
-                }, 3000);
+                }, validInterval);
             }
         }
     });
 }
 
-
 if (DEPOSIT_NODES.periodInp) {
     DEPOSIT_NODES.periodInp.addEventListener('input', function () {
-        periodValue = setInterval(function () {
+        setDecimalNumber(this, 1);
+
+        periodValue = setInterval(() => {
             checkPeriod(
-                DEPOSIT_NODES.periodInp, DEPOSIT_NODES.periodErrOutput, TEXT_ERRORS.period.minInvest, TEXT_ERRORS.period.maxInvest, TEXT_ERRORS.blankInp
+                this,
+                DEPOSIT_NODES.periodErrOutput,
+                TEXT_ERRORS.period.minInvest,
+                TEXT_ERRORS.period.maxInvest,
+                TEXT_ERRORS.blankInp
             );
-        }, 3000);
+        }, validInterval);
     });
 }
 
-
 // * REDIRECT ON PAYMENT PAGE
-
 if (DEPOSIT_NODES.formBtn) {
     DEPOSIT_NODES.formBtn.addEventListener('click', function () {
-        if (DEPOSIT_NODES.investInp.classList.contains(STATE_LIST.success) && DEPOSIT_NODES.periodInp.classList.contains(STATE_LIST.success)) {
+        if (
+            DEPOSIT_NODES.investInp.classList.contains(STATE_LIST.success) &&
+            DEPOSIT_NODES.periodInp.classList.contains(STATE_LIST.success
+            )) {
             for (btn of DEPOSIT_NODES.curBtns) {
-
-                // * SAVE TO LOCAL STORAGE
                 transferData(
-                    btn, transactionData, 'dataRaw', CUR_LIST.bitcoin.name, DEPOSIT_NODES.investInp.value, DEPOSIT_NODES.periodInp.value, WALLETS.bitcoin, IMG_PATHS.bitcoin
+                    btn,
+                    transactionData,
+                    storageName,
+                    CUR_LIST.bitcoin.name,
+                    DEPOSIT_NODES.investInp.value,
+                    DEPOSIT_NODES.periodInp.value,
+                    WALLETS.bitcoin,
+                    IMG_PATHS.bitcoin
                 );
-
                 transferData(
-                    btn, transactionData, 'dataRaw', CUR_LIST.ethereum.name, DEPOSIT_NODES.investInp.value, DEPOSIT_NODES.periodInp.value, WALLETS.ethereum, IMG_PATHS.ethereum
+                    btn,
+                    transactionData,
+                    storageName,
+                    CUR_LIST.ethereum.name,
+                    DEPOSIT_NODES.investInp.value,
+                    DEPOSIT_NODES.periodInp.value,
+                    WALLETS.ethereum,
+                    IMG_PATHS.ethereum
                 );
-
                 transferData(
-                    btn, transactionData, 'dataRaw', CUR_LIST.litecoin.name, DEPOSIT_NODES.investInp.value, DEPOSIT_NODES.periodInp.value, WALLETS.litecoin, IMG_PATHS.litecoin
+                    btn,
+                    transactionData,
+                    storageName,
+                    CUR_LIST.litecoin.name,
+                    DEPOSIT_NODES.investInp.value,
+                    DEPOSIT_NODES.periodInp.value,
+                    WALLETS.litecoin,
+                    IMG_PATHS.litecoin
                 );
-
                 transferData(
-                    btn, transactionData, 'dataRaw', CUR_LIST.dash.name, DEPOSIT_NODES.investInp.value, DEPOSIT_NODES.periodInp.value, WALLETS.dash, IMG_PATHS.dash
+                    btn,
+                    transactionData,
+                    storageName,
+                    CUR_LIST.dash.name,
+                    DEPOSIT_NODES.investInp.value,
+                    DEPOSIT_NODES.periodInp.value, WALLETS.dash,
+                    IMG_PATHS.dash
                 );
-
                 transferData(
-                    btn, transactionData, 'dataRaw', CUR_LIST.monero.name, DEPOSIT_NODES.investInp.value, DEPOSIT_NODES.periodInp.value, WALLETS.monero, IMG_PATHS.monero
+                    btn,
+                    transactionData,
+                    storageName,
+                    CUR_LIST.monero.name,
+                    DEPOSIT_NODES.investInp.value,
+                    DEPOSIT_NODES.periodInp.value, WALLETS.monero,
+                    IMG_PATHS.monero
                 );
-
                 transferData(
-                    btn, transactionData, 'dataRaw', CUR_LIST.usd.name, DEPOSIT_NODES.investInp.value, DEPOSIT_NODES.periodInp.value, WALLETS.usd, IMG_PATHS.usd
+                    btn,
+                    transactionData,
+                    storageName,
+                    CUR_LIST.usd.name,
+                    DEPOSIT_NODES.investInp.value,
+                    DEPOSIT_NODES.periodInp.value, WALLETS.usd,
+                    IMG_PATHS.usd
                 );
             }
-            DEPOSIT_NODES.formBtn.setAttribute('href', pageAddress);
+            DEPOSIT_NODES.formBtn.parentElement.setAttribute('action', pageAddress);
 
         } else {
-            DEPOSIT_NODES.formBtn.setAttribute('href', '');
+            DEPOSIT_NODES.formBtn.parentElement.setAttribute('action', '');
         }
     });
 }
@@ -399,9 +472,6 @@ if (DEPOSIT_NODES.formBtn) {
 // ! PAYMENT PAGE FUNCTIONALITY
 
 // * TIMER
-
-let time = 1800;
-
 function timeCount() {
     let minutes = Math.floor(time / 60);
     let seconds = time % 60;
@@ -418,8 +488,11 @@ if (PAY_NODES.timeOutput) {
 }
 
 // * DATA TRANSFER
+function getId() {
+    return Math.floor(Math.random() * 10000000);
+}
 
-let dataRaw = JSON.parse(localStorage.getItem('dataRaw'));
+let dataRaw = JSON.parse(localStorage.getItem(storageName));
 
 function setCreditails() {
     PAY_NODES.curOutput.textContent = dataRaw.currency;
@@ -430,10 +503,7 @@ function setCreditails() {
     PAY_NODES.amountOutput2.value = dataRaw.amount;
     PAY_NODES.walletOutput.value = dataRaw.wallet;
     PAY_NODES.qrCode.setAttribute('src', dataRaw.imgPath);
-
-    // * Generate random string
-    let randomStr = new RandExp(/[0-9]{8}/).gen();
-    PAY_NODES.invoiceId.textContent = randomStr;
+    PAY_NODES.invoiceId.textContent = getId();
 
     localStorage.clear();
 }
@@ -443,7 +513,6 @@ if (PAY_NODES.walletOutput) {
 }
 
 // * COPY BTN
-
 function copyData(btn, input, tooltip) {
     if (btn) {
         btn.addEventListener('click', function () {
@@ -453,5 +522,13 @@ function copyData(btn, input, tooltip) {
     }
 }
 
-copyData(PAY_NODES.copyAmount, PAY_NODES.amountOutput2, PAY_NODES.amountTooltip);
-copyData(PAY_NODES.copyAddress, PAY_NODES.walletOutput, PAY_NODES.addressTooltip);
+copyData(
+    PAY_NODES.copyAmount,
+    PAY_NODES.amountOutput2,
+    PAY_NODES.amountTooltip
+);
+copyData(
+    PAY_NODES.copyAddress,
+    PAY_NODES.walletOutput,
+    PAY_NODES.addressTooltip
+);

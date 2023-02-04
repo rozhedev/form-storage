@@ -14,17 +14,17 @@
         <div class="container">
             <h2 class="title">Make a deposit</h2>
 
-            <div class="deposit__inner">
+            <form action="" class="deposit__inner form" novalidate>
                 <div class="deposit__currencies">
-                    <button class="deposit__currencies-btn" data-currency="Bitcoin">Bitcoin
+                    <button type="button" class="deposit__currencies-btn" data-currency="Bitcoin">Bitcoin
                         BTC</button>
-                    <button class="deposit__currencies-btn" data-currency="Ethereum">Ethereum
+                    <button type="button" class="deposit__currencies-btn" data-currency="Ethereum">Ethereum
                         ETH</button>
-                    <button class="deposit__currencies-btn" data-currency="Litecoin">Litecoin
+                    <button type="button" class="deposit__currencies-btn" data-currency="Litecoin">Litecoin
                         LTC</button>
-                    <button class="deposit__currencies-btn" data-currency="Dash">Dash DASH</button>
-                    <button class="deposit__currencies-btn" data-currency="Monero">Monero XMR</button>
-                    <button class="deposit__currencies-btn" data-currency="USD">Dollar USD</button>
+                    <button type="button" class="deposit__currencies-btn" data-currency="Dash">Dash DASH</button>
+                    <button type="button" class="deposit__currencies-btn" data-currency="Monero">Monero XMR</button>
+                    <button type="button" class="deposit__currencies-btn" data-currency="USD">Dollar USD</button>
                 </div>
 
                 <div class="deposit__amount">
@@ -41,27 +41,12 @@
                     <small class="deposit__period-error">Error message</small>
                 </div>
 
-                <!-- Redirect to payment.html -->
-                <a href="" class="deposit__btn btn">Invest funds</a>
-            </div>
-
-            <div class="info">
-                <ul>
-                    <li>Small invest: 20$ - 100$</li>
-                    <li>Medium invest: 200$ - 1000$</li>
-                    <li>Big invest: 1000$ - ...</li>
-                </ul>
-                <ul>
-                    <li>Tariff STARTER: 105% per 1 month (30 days)</li>
-                    <li>Tariff OPTIMAL: 110% per 1 month (30 days)</li>
-                    <li>Tariff PROFFESIONAL: 115% per 1 month (30 days)</li>
-                </ul>
-            </div>
+                <button type="submit" class="btn" id="deposit-btn">Invest funds</button>
+            </form>
         </div>
     </section>
 
     <script src="https://kit.fontawesome.com/f77f4500aa.js" crossorigin="anonymous"></script>
-    <script src="js/randexp.min.js"></script>
     <script src="js/script.js"></script>
 </body>
 
