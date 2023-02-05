@@ -174,7 +174,7 @@ let transactionData = {
     tariff: "",
 };
 
-let validInterval = 2500;
+let validInterval = 3000;
 let time = 1800;            // in seconds
 let storageName = 'dataRaw';
 
@@ -304,6 +304,7 @@ function getCurBtnCond(btn, curName, state) {
     return btn.getAttribute('data-currency') == curName && btn.classList.contains(state);
 }
 
+// * Complete check
 function checkOptions(btn) {
     if (
         getCurBtnCond(btn, CUR_LIST.bitcoin.name, STATE_LIST.active)
@@ -404,15 +405,35 @@ function checkOptions(btn) {
     }
 }
 
+// * Count calling f(x)
+function counter(originalFunc) {
+    const fun = function (...args) {
+        args
+            .filter((v, i, a) => a.indexOf(v) === i)
+            .forEach((v) => fun.counts[v] = (fun.counts[v] ?? 0) + 1);
+        return originalFunc(...args);
+    }
+    fun.counts = {};
+    fun.totalRun = (arg) => fun.counts[arg] ?? 0;
+    return fun;
+}
 
 // * CALL FUNCTIONS
+
+// * Add method totalRun from counter to checkOptions
+const checkCounter = counter(checkOptions);
+let callCount = 0;
 
 for (btn of DEPOSIT_NODES.curBtns) {
     btn.addEventListener("click", function (e) {
         selectCurrency(
             e, curBtnsClass, DEPOSIT_NODES.curBtns
         );
-        checkOptions(btn);
+        callCount += checkCounter.totalRun(this);
+        console.log(callCount);
+        if (callCount > 1) {
+            checkCounter(this);
+        }
     });
 }
 
@@ -420,11 +441,11 @@ if (DEPOSIT_NODES.investInp) {
     DEPOSIT_NODES.investInp.addEventListener('input', function () {
         setDecimalNumber(this, 8);
 
-        setInterval(() => {
+        setTimeout(() => {
             for (btn of DEPOSIT_NODES.curBtns) {
-                checkOptions(btn);
+                checkCounter(btn);
             }
-        }, validInterval)
+        }, validInterval);
     });
 }
 
@@ -432,7 +453,7 @@ if (DEPOSIT_NODES.periodInp) {
     DEPOSIT_NODES.periodInp.addEventListener('input', function () {
         setDecimalNumber(this, 1);
 
-        periodValue = setInterval(() => {
+        periodValue = setTimeout(() => {
             checkPeriod(
                 this,
                 DEPOSIT_NODES.periodErrOutput,
@@ -590,3 +611,5 @@ copyData(
     PAY_NODES.walletOutput,
     PAY_NODES.addressTooltip
 );
+
+// * MODAL
