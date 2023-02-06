@@ -1,3 +1,13 @@
 # Form storage
 
-An exercise for learning local storage in JavaScript.
+![demo](/img/demo.gif)
+
+Pet project with data transferring via local storage.
+
+### Features
+* Multicurrency validation
+* Function call counter (for prevent error)
+* Tariff checker
+* Timer
+* Copy btn
+* Modal
