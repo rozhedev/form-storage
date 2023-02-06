@@ -14,7 +14,7 @@
         <div class="container">
             <h2 class="title">Payment details</h2>
 
-            <div class="deposit__inner payment__inner">
+            <div class="inner payment__inner">
                 <div class="deposit__content payment__content">
 
                     <div class="payment__timer">
@@ -81,14 +81,26 @@
                                 transfer it manually.</span>
                             <img class="payment__qr-img" id="qr-code" src="img/usd.png" alt="qr-code">
                         </div>
-                        <form action="success.html">
-                            <button class="payment__btn btn">Payed</button>
-                        </form>
+                        <a href="#pay-modal" class="modal-open btn" id="pay-btn">Payed</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <div class="modal" id="pay-modal">
+        <div class="modal__dialog inner">
+            <i class="fas fa-check-circle"></i>
+            <h2 class="modal__dialog-title">Success</h2>
+            <p class="modal__dialog-text">
+                The transaction has been sent to processing. Funds will be credited to the balance within one hour</p>
+
+            <a href="index.html" class="btn">Go to dashboard</a>
+            <button type="button" class="modal-close btn close-btn">
+               x
+            </button>
+        </div>
+    </div>
     <script src="https://kit.fontawesome.com/f77f4500aa.js" crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
 </body>

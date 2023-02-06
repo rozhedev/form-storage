@@ -156,6 +156,8 @@ const PAY_NODES = {
     amountTooltip: document.getElementById('amount-tooltip'),
     copyAddress: document.getElementById('copy-address'),
     addressTooltip: document.getElementById('address-tooltip'),
+    payBtn: document.getElementById("pay-btn"),
+    modal: document.getElementById("pay-modal"),
 }
 
 const TARIFF_NAMES = {
@@ -174,7 +176,7 @@ let transactionData = {
     tariff: "",
 };
 
-let validInterval = 3000;
+let validInterval = 2000;
 let time = 1800;            // in seconds
 let storageName = 'dataRaw';
 
@@ -430,7 +432,6 @@ for (btn of DEPOSIT_NODES.curBtns) {
             e, curBtnsClass, DEPOSIT_NODES.curBtns
         );
         callCount += checkCounter.totalRun(this);
-        console.log(callCount);
         if (callCount > 1) {
             checkCounter(this);
         }
@@ -587,7 +588,7 @@ function setCreditails() {
     localStorage.clear();
 }
 
-if (PAY_NODES.walletOutput) {
+if (dataRaw) {
     setCreditails();
 }
 
@@ -613,3 +614,55 @@ copyData(
 );
 
 // * MODAL
+
+const MODAL_CLASSES = {
+    ROOT: "modal",
+    DIALOG_BODY: "modal__dialog-body",
+    TRIGGER_OPEN: "modal-open",
+    TRIGGER_CLOSE: "modal-close"
+};
+
+document.addEventListener("click", (e) => {
+    //  open
+    if (e.target.closest(`.${MODAL_CLASSES.TRIGGER_OPEN}`)) {
+        e.preventDefault();
+
+        const target = e.target.closest(`.${MODAL_CLASSES.TRIGGER_OPEN}`);
+        const modalID = target.getAttribute("href").replace("#", "");
+        const modal = document.getElementById(modalID);
+        modal.classList.add(STATE_LIST.active);
+
+        document.body.style.paddingRight = `${getScrollbarWidth()}px`;
+        document.body.style.overflow = "hidden";
+    }
+    // close
+    if (
+        e.target.closest(`.${MODAL_CLASSES.TRIGGER_CLOSE}`) ||
+        e.target.classList.contains(STATE_LIST.active)
+    ) {
+        e.preventDefault();
+        const modal = e.target.closest(`.${MODAL_CLASSES.ROOT}`);
+        modal.classList.remove(STATE_LIST.active);
+        
+        document.body.style.overflow = "auto";
+        document.body.style.paddingRight = "0px";
+    }
+});
+
+const getScrollbarWidth = () => {
+    const item = document.createElement("div");
+
+    item.style.position = "absolute";
+    item.style.top = "-9999px";
+    item.style.width = "50px";
+    item.style.height = "50px";
+    item.style.overflow = "scroll";
+    item.style.visibility = "hidden";
+
+    document.body.appendChild(item);
+
+    // * Calc scroll width
+    const scrollBarWidth = item.offsetWidth - item.clientWidth;
+    document.body.removeChild(item);
+    return scrollBarWidth;
+};
